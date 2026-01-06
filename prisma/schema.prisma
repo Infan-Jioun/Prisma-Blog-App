@@ -42,7 +42,6 @@ model Post {
   @@index([authorId])
   // schema Name Altenative name create 
   @@map("posts")
-   
 }
 
 model Comment {
@@ -55,4 +54,7 @@ model Comment {
   parentId String?
   status   CommentStasus @default(APPROVED)
   updated  DateTime      @updatedAt
+
+  @@index([postId])
+  @@map("Comments")
 }
