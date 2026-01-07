@@ -3,12 +3,12 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
-  host: "smtp.ethereal.email",
+  host: "smtp.gmail.com",
   port: 587,
   secure: false, // Use true for port 465, false for port 587
   auth: {
-    user: "maddison53@ethereal.email",
-    pass: "jn7jnAPss4f63QBp6D",
+    user: process.env.APP_USER,
+    pass: process.env.APP_PASS,
   },
 });
 
@@ -43,7 +43,15 @@ export const auth = betterAuth({
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }, request) => {
       // ekane teke email sender use kora hoi
-      console.log("Send Verification email");
+      const info = await transporter.sendMail({
+        from: '"Prisma Blog App" <prisma@blog.com>',
+        to: "infanjiounrahman20606@gmail.com",
+        subject: "Hello ✔",
+        text: "Hello world?", // Plain-text version of the message
+        html: "<b>Hello world?</b>", // HTML version of the message
+      });
+
+      console.log("Message sent:", info.messageId);
     },
   }
 
