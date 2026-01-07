@@ -4,9 +4,9 @@ import { auth as betterAuth } from '../../lib/auth'
 import { success } from "better-auth/*";
 const router = express.Router();
 // middlewere
-// enum Roles {
-//     "ADMIN", "USER"
-// }
+export enum UserRole {
+    ADMIN = "ADMIN", USER = "USER"
+}
 declare global {
     namespace Express {
         interface Request {
@@ -20,7 +20,7 @@ declare global {
         }
     }
 }
-const auth = (...roles: any) => {
+const auth = (...roles: UserRole[]) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         console.log(roles);
         const session = await betterAuth.api.getSession({
@@ -44,14 +44,14 @@ const auth = (...roles: any) => {
             email: session.user.email,
             name: session.user.name,
             role: session.user.role as string,
-            emailVerified : session.user.emailVerified
+            emailVerified: session.user.emailVerified
         }
 
         next();
     }
 }
 
-router.post("/", auth("USER"), postController.createPost)
+router.post("/", auth(UserRole.USER), postController.createPost)
 
 
 export const postRouter: Router = router; 
