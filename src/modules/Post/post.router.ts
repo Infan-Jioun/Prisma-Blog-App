@@ -46,7 +46,13 @@ const auth = (...roles: UserRole[]) => {
             role: session.user.role as string,
             emailVerified: session.user.emailVerified
         }
-
+        // checker for admin 
+        if (!roles.length && !roles.includes(req.user.role as UserRole)) {
+            return res.status(401).json({
+                success: false,
+                message: "Forbidden Access! You Don't have permission for Access"
+            }) 
+        }
         next();
     }
 }
