@@ -86,7 +86,7 @@ export const auth = betterAuth({
               
               <p style="font-size: 14px; color: #888888; margin-top: 30px;">
                 Or copy and paste this link into your browser:<br>
-                <a href="${verificationUrl}" style="color: #4f46e5; word-break: break-all;">${url}</a>
+                <a href="${url}" style="color: #4f46e5; word-break: break-all;">${url}</a>
               </p>
               
               <p style="font-size: 14px; color: #888888; margin-top: 40px;">
@@ -115,6 +115,15 @@ export const auth = betterAuth({
       }
 
     },
+     
+     socialProviders: {
+        google: { 
+            clientId: process.env.GOOGLE_CLIENT_ID as string, 
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string, 
+        }, 
+    },
   }
+  // GOOGLE_CLIENT_ID
+  // GOOGLE_CLIENT_SECRET
 
 });
