@@ -1,8 +1,8 @@
 import express, { Router, type NextFunction, type Request, type Response } from "express";
 import { postController } from "./post.controller";
 import { auth as betterAuth } from '../../lib/auth'
-import { success } from "better-auth/*";
-const router = express.Router();
+
+ const router = express.Router();
 // middlewere
 export enum UserRole {
     ADMIN = "ADMIN", USER = "USER"
