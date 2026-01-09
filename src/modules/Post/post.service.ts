@@ -2,7 +2,7 @@ import type { Post } from "../../../generated/prisma/client";
 import type { PostWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
 
-const getAllPost = async ({ search, tags }: { search: string | undefined, tags: string[] | [] }) => {
+const getAllPost = async ({ search, tags, isFeatured }: { search: string | undefined, tags: string[] | [], isFeatured: boolean }) => {
     const addConditions: PostWhereInput[] = [];
     if (search) {
         addConditions.push({
