@@ -1,7 +1,7 @@
 import type { Post } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
-const getAllPost = async () => {
+const getAllPost = async (payload : {search : string | undefined}) => {
     const allpost = await prisma.post.findMany();
     return allpost;
 }
