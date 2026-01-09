@@ -2,7 +2,7 @@ import type { Request, Response } from "express"
 import { postService } from "./post.service"
 const getAllPost = async (req: Request, res: Response) => {
     try {
-        const { search } = req.query;
+        const { search } = await req.query;
         const searchString = typeof search === "string" ? search : undefined;
         const result = await postService.getAllPost({ search: searchString });
 
