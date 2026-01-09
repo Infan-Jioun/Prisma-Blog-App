@@ -27,14 +27,20 @@ const getAllPost = async ({ search, tags }: { search: string | undefined, tags: 
             ],
         })
     }
-
+    if (tags.length > 0) {
+        addConditions.push(
+            {
+                tags: {
+                    hasEvery: tags as string[]
+                }
+            }
+        )
+    }
     const allpost = await prisma.post.findMany({
 
         where: {
 
-            tags: {
-                hasEvery: tags as string[]
-            }
+
         }
     });
     return allpost;
