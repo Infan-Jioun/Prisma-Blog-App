@@ -2,7 +2,7 @@ import type { Post } from "../../../generated/prisma/client";
 import type { PostWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
 
-const getAllPost = async ({ search, tags, isFeatured }: { search: string | undefined, tags: string[] | [], isFeatured: boolean  | undefined }) => {
+const getAllPost = async ({ search, tags, isFeatured }: { search: string | undefined, tags: string[] | [], isFeatured: boolean | undefined }) => {
     const addConditions: PostWhereInput[] = [];
     if (search) {
         addConditions.push({
@@ -36,7 +36,12 @@ const getAllPost = async ({ search, tags, isFeatured }: { search: string | undef
                 }
             }
         )
-    }
+    }   
+if (typeof isFeatured === "boolean") {
+    addConditions.push({
+        isFeatured : isFeatured
+    })
+}
     const allpost = await prisma.post.findMany({
 
         where: {
@@ -57,6 +62,7 @@ const createPost = async (data: Omit<Post, "id " | "createdId" | "updatedId" | "
     })
     console.log(result);
 }
+
 export const postService = {
     createPost,
     getAllPost
