@@ -17,6 +17,12 @@ async function seedAdmiin() {
         if (existingUser) {
             throw new Error("User Already exists")
         }
+        const signupAdmin = await fetch("http://localhost:5000/api/auth/sign-up/email", {
+            method: "POST",
+            headers: { "Content-Type": "application/josn" },
+            body: JSON.stringify(adminData)
+        })
+        console.log(existingUser);
     } catch (error) {
         console.error(error)
     }
