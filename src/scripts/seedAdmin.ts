@@ -4,8 +4,8 @@ import { UserRole } from "../middlewere/auth"
 async function seedAdmiin() {
     try {
         const adminData = {
-            name: "admin23",
-            email: "admin@admininfan1232.com",
+            name: "admin",
+            email: "admin2@admin.com",
             role: UserRole.ADMIN,
             password: "admin123456",
             emailVerified: true
@@ -21,11 +21,22 @@ async function seedAdmiin() {
 
         const signupAdmin = await fetch("http://localhost:5000/api/auth/sign-up/email", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", Origin: "http://localhost:3000" },
             body: JSON.stringify(adminData)
         })
 
         console.log(signupAdmin);
+        if (signupAdmin.ok) {
+            await prisma.user.update({
+                where: {
+                    email: adminData.email
+                },
+                data: {
+                    emailVerified: true
+                }
+            })
+            console.log("Email Verification Success");
+        }
     } catch (error) {
         console.error(error)
     }
