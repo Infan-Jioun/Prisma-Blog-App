@@ -65,7 +65,12 @@ const getAllPost = async ({ search, tags, isFeatured, status, authorId, page, li
             [sortBy]: sortOrder
         }
     });
-    return allpost;
+    const total = await prisma.post.count({
+        where: {
+            AND: addConditions
+        }
+    })
+    return { data: allpost, pagination: total };
 }
 
 const createPost = async (data: Omit<Post, "id " | "createdId" | "updatedId" | "authorId">, userId: string) => {
