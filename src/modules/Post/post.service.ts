@@ -70,7 +70,7 @@ const getAllPost = async ({ search, tags, isFeatured, status, authorId, page, li
             AND: addConditions
         }
     })
-    return { data: allpost, pagination: total };
+    return { data: allpost, pagination: total , page, limit , totalPage : Math.ceil(total/limit) };
 }
 
 const createPost = async (data: Omit<Post, "id " | "createdId" | "updatedId" | "authorId">, userId: string) => {
