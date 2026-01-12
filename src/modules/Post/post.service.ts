@@ -70,7 +70,7 @@ const getAllPost = async ({ search, tags, isFeatured, status, authorId, page, li
             AND: addConditions
         }
     })
-    return { data: allpost, pagination: total , page, limit , totalPage : Math.ceil(total/limit) };
+    return { data: allpost, pagination: total, page, limit, totalPage: Math.ceil(total / limit) };
 }
 
 const createPost = async (data: Omit<Post, "id " | "createdId" | "updatedId" | "authorId">, userId: string) => {
@@ -84,7 +84,32 @@ const createPost = async (data: Omit<Post, "id " | "createdId" | "updatedId" | "
     console.log(result);
 }
 
+const getPostById = async (postId: string) => {
+
+    return await prisma.$transaction(async (tx) => {
+        await tx.post.update({
+            where: {
+                id: postId
+            }, data: {
+                views: {
+                    increment: 1
+                }
+            }
+        })
+        const postData = await tx.post.findUnique({
+            where: {
+                id: postId,
+            },
+        });
+        return postData;
+    })
+
+};
+
+
+
 export const postService = {
     createPost,
-    getAllPost
+    getAllPost,
+    getPostById
 }

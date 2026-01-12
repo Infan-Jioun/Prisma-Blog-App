@@ -47,15 +47,22 @@ const createPost = async (req: Request, res: Response) => {
 console.log(createPost);
 const getPostById = async (req: Request, res: Response) => {
     try {
-        const result = await postService.getPostById();
-        console.log(result);
+        const { id } = req.params;
+        if (!id) {
+            throw new Error("Post id is required");
+        }
+
+        const result = await postService.getPostById(id);
+        res.status(200).json(result);
     } catch (error) {
         res.status(400).json({
-            error: "Post Creation Failed"
-        })
+            error: "Fetch Failed",
+        });
     }
-}
+};
+
 export const postController = {
     createPost,
-    getAllPost
+    getAllPost,
+    getPostById
 }

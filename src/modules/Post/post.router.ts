@@ -3,11 +3,11 @@ import { postController } from "./post.controller";
 import { auth as betterAuth } from '../../lib/auth'
 import { auth, UserRole } from "../../middlewere/auth";
 
- const router = express.Router();
+const router = express.Router();
 // middlewere
 
-router.get("/" , postController.getAllPost)
+router.get("/", postController.getAllPost)
 router.post("/", auth(UserRole.USER), postController.createPost)
-
+router.get("/:id", postController.getPostById)
 
 export const postRouter: Router = router; 

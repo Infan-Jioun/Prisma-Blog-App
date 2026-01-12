@@ -10,6 +10,7 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 // post 
 app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use("/posts", postRouter)
