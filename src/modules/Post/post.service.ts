@@ -2,7 +2,7 @@ import type { Post, PostStatus } from "../../../generated/prisma/client";
 import type { PostWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
 
-const getAllPost = async ({ search, tags, isFeatured, status, authorId, page, limit, skip }: { search: string | undefined, tags: string[] | [], isFeatured: boolean | undefined, status: PostStatus | undefined, authorId: string | undefined, page: number, limit: number, skip: number }) => {
+const getAllPost = async ({ search, tags, isFeatured, status, authorId, page, limit, skip, sortBy, sortOrder }: { search: string | undefined, tags: string[] | [], isFeatured: boolean | undefined, status: PostStatus | undefined, authorId: string | undefined, page: number, limit: number, skip: number, sortBy: string | undefined, sortOrder: string | undefined }) => {
     const addConditions: PostWhereInput[] = [];
     if (search) {
         addConditions.push({
@@ -60,7 +60,10 @@ const getAllPost = async ({ search, tags, isFeatured, status, authorId, page, li
         where: {
             AND: addConditions
 
-        }
+        },
+        orderBy: sortBy && sortOrder ? {
+            [sortBy]: sortOrder
+        } : { createdAt: "desc" }
     });
     return allpost;
 }
