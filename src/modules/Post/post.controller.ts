@@ -18,6 +18,7 @@ const getAllPost = async (req: Request, res: Response) => {
         const sortOrder = req.query.sortOrder as string | undefined;
         const result = await postService.getAllPost({ search: searchString, tags, isFeatured, status, authorId, page, limit, skip, sortBy, sortOrder });
         const option = paginaitionSortingHelper(req.query)
+        console.log("Option--", option);
 
         res.status(200).json(result);
     } catch (error) {
