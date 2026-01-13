@@ -81,7 +81,7 @@ const createPost = async (data: Omit<Post, "id " | "createdId" | "updatedId" | "
 
         }
     })
-    console.log(result);
+    // console.log(result);
 }
 
 const getPostById = async (postId: string) => {
@@ -100,6 +100,13 @@ const getPostById = async (postId: string) => {
             where: {
                 id: postId,
             },
+            include: {
+                comments: {
+                    where : {
+                        parentId : null
+                    }
+                }
+            }
         });
         return postData;
     })
