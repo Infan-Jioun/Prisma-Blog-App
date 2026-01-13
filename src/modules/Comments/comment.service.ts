@@ -51,7 +51,7 @@ const getCommentByAuthor = async (authorId: string) => {
         }
     })
 }
-const deleteComment = async () => {
+const deleteComment = async (commentId: string, authorId: string) => {
     console.log("deleted comment");
 }
 export const commentService = {
