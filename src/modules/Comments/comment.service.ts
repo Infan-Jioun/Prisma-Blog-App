@@ -35,8 +35,11 @@ const getCommentById = async (commentId: string) => {
     })
 
 }
-
+const getCommentByAuthor = async (athorId: string) => {
+    console.log({ athorId });
+}
 export const commentService = {
     createComment,
-    getCommentById
+    getCommentById,
+    getCommentByAuthor
 }
