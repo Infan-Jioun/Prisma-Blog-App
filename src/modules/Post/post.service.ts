@@ -102,8 +102,15 @@ const getPostById = async (postId: string) => {
             },
             include: {
                 comments: {
-                    where : {
-                        parentId : null
+                    where: {
+                        parentId: null
+                    },
+                    include: {
+                        replies: {
+                            include: {
+                                replies: true
+                            }
+                        }
                     }
                 }
             }
