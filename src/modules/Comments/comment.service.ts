@@ -61,7 +61,14 @@ const deleteComment = async (commentId: string, authorId: string) => {
     if (!commentData) {
         throw new Error("Your Provided input is invaild")
     }
+    return await prisma.comment.delete({
+        where : {
+            id : commentData.id
+        }
+    })
+
 }
+
 export const commentService = {
     createComment,
     getCommentById,
