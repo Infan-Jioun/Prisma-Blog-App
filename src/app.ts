@@ -17,5 +17,5 @@ app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use("/posts", postRouter)
 app.use("/comments", commentRouter)
 app.get("/", (req, res) => {
-    res.send("Hello World ")
+    res.send("Hello World")
 })

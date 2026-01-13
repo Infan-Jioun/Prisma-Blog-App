@@ -1,7 +1,9 @@
 import express, { Router } from "express";
 import { commentController } from "./comment.controller";
 import { auth, UserRole } from "../../middlewere/auth";
-import { commentService } from "./comment.service";
+
 const router = express.Router();
-router.post("/", auth(UserRole.USER, UserRole.ADMIN),  commentController.createComment)
+
+router.post("/", auth(UserRole.USER, UserRole.ADMIN), commentController.createComment);
+router.get("/:commentId",  commentController.getCommentById)
 export const commentRouter: Router = router;
