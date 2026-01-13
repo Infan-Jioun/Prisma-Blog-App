@@ -1,3 +1,4 @@
+import type { CommentStatus } from "../../../generated/prisma/enums"
 import { prisma } from "../../lib/prisma"
 
 const createComment = async (payload: { content: string, authorId: string, postId: string, parentId?: string }) => {
@@ -62,16 +63,21 @@ const deleteComment = async (commentId: string, authorId: string) => {
         throw new Error("Your Provided input is invaild")
     }
     return await prisma.comment.delete({
-        where : {
-            id : commentData.id
+        where: {
+            id: commentData.id
         }
     })
 
 }
-
+const updateComment = async (commentId: string, data: {
+    content: string, status: CommentStatus
+}, authorId: string) => {
+    console.log({ commentId, data, authorId });
+}
 export const commentService = {
     createComment,
     getCommentById,
     getCommentByAuthor,
-    deleteComment
+    deleteComment,
+    updateComment
 }
