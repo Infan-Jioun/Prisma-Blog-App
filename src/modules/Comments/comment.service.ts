@@ -18,7 +18,11 @@ const createComment = async (payload: { content: string, authorId: string, postI
     })
 
 }
+const getCommentById = async (commentId: string) => {
+    console.log("getCommentById");
+}
 console.log(createComment);
 export const commentService = {
-    createComment
+    createComment,
+    getCommentById
 }
