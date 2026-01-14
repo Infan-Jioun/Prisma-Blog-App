@@ -177,9 +177,16 @@ const getMyPost = async (authorId: string) => {
 }
 
 const updatePost = async (postId: string, data: Partial<Post>, authorId: string) => {
-    console.log({
-        postId, data, authorId
-    });
+    const postData = await prisma.post.findUniqueOrThrow({
+        where: {
+            id: authorId
+        },
+        select: {
+            id: true,
+            authorId: true
+        }
+
+    })
 }
 export const postService = {
     createPost,
