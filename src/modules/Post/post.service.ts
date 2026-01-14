@@ -141,6 +141,15 @@ const getPostById = async (postId: string) => {
 
 };
 const getMyPost = async (authorId: string) => {
+    await prisma.user.findUnique({
+        where: {
+            id: authorId,
+            status: "ADMIN"
+        }, select: {
+            id: true
+        }
+    })
+
     const result = await prisma.post.findMany({
         where: {
             authorId
@@ -154,11 +163,13 @@ const getMyPost = async (authorId: string) => {
             }
         }
     })
-    const total = await prisma.post.count({
-        where: {
-            authorId
-        }
+    const total = await prisma.post.aggregate({
+        _count: {
+            id: true
+        },
+
     })
+
     return {
         data: result,
         total
