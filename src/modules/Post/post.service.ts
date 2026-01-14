@@ -200,7 +200,7 @@ const updatePost = async (postId: string, data: Partial<Post>, authorId: string,
     })
     return result;
 }
-const deletePost = async (postId: string, data: Partial<Post>, authorId: string, isAdmin: boolean) => {
+const deletePost = async (postId: string, authorId: string, isAdmin: boolean) => {
     const postData = await prisma.post.findUniqueOrThrow({
         where: {
             id: postId
