@@ -82,10 +82,11 @@ const updatePost = async (req: Request, res: Response) => {
         if (!user) {
             throw new Error("You are unauthorized")
         }
-        const { postId } = req.params;
+        const { postId} = req.params;
         const result = await postService.updatePost(postId as string, req.body, user.id);
         res.status(200).json(result);
     } catch (error) {
+        console.log(error);
         res.status(400).json({
             error: "Update Failed",
         });

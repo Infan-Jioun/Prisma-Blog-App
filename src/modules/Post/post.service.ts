@@ -179,7 +179,7 @@ const getMyPost = async (authorId: string) => {
 const updatePost = async (postId: string, data: Partial<Post>, authorId: string) => {
     const postData = await prisma.post.findUniqueOrThrow({
         where: {
-            id: authorId
+            id: postId
         },
         select: {
             id: true,
@@ -195,7 +195,7 @@ const updatePost = async (postId: string, data: Partial<Post>, authorId: string)
             id: postData.id
         }, data
     })
-    return  result
+    return  result;
 }
 export const postService = {
     createPost,
