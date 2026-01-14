@@ -99,5 +99,6 @@ export const commentService = {
     getCommentById,
     getCommentByAuthor,
     deleteComment,
-    updateComment
+    updateComment,
+    moderateComment
 }

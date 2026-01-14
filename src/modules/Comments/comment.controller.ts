@@ -57,7 +57,7 @@ const updateComment = async (req: Request, res: Response) => {
     try {
         const user = req.user;
         const { commentId } = req.params;
-        const result = await commentService.updateComment(commentId as string, req.body, 
+        const result = await commentService.updateComment(commentId as string, req.body,
             user?.id as string);
         res.status(200).json(result); console.log(result);
     } catch (error) {
