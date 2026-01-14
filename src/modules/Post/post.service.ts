@@ -141,10 +141,10 @@ const getPostById = async (postId: string) => {
 
 };
 const getMyPost = async (authorId: string) => {
-    await prisma.user.findUnique({
+    await prisma.user.findUniqueOrThrow({
         where: {
             id: authorId,
-            status: "ADMIN"
+            status: "Active"
         }, select: {
             id: true
         }
