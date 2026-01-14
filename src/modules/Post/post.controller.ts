@@ -60,7 +60,7 @@ const getPostById = async (req: Request, res: Response) => {
         });
     }
 };
-const getMyPosts = async (req: Request, res: Response) => {
+const getMyPost = async (req: Request, res: Response) => {
     try {
         const user = req.user;
         if (!user) {
