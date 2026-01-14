@@ -176,10 +176,15 @@ const getMyPost = async (authorId: string) => {
     };
 }
 
-
+const updatePost = async (postId: string, data: Partial<Post>, authorId: string) => {
+    console.log({
+        postId, data, authorId
+    });
+}
 export const postService = {
     createPost,
     getAllPost,
     getPostById,
-    getMyPost
+    getMyPost,
+    updatePost
 }
