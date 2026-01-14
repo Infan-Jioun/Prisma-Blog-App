@@ -88,8 +88,11 @@ const updateComment = async (commentId: string, data: {
         where: {
             id: commentId,
             authorId
-        }, data 
+        }, data
     })
+}
+const moderateComment = async () => {
+    console.log("ModerateComment");
 }
 export const commentService = {
     createComment,
