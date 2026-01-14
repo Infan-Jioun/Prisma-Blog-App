@@ -34,8 +34,8 @@ const createPost = async (req: Request, res: Response) => {
             })
         }
         const result = await postService.createPost(req.body, user.id as string);
+        res.status(201).json(result);
         console.log(result);
-        res.status(201).json(result)
 
     } catch (error) {
         res.status(400).json({
@@ -44,7 +44,7 @@ const createPost = async (req: Request, res: Response) => {
     }
 }
 
-console.log(createPost);
+
 const getPostById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
