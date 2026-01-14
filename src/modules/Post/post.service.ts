@@ -190,6 +190,9 @@ const updatePost = async (postId: string, data: Partial<Post>, authorId: string,
     if (!isAdmin && (postData.authorId !== authorId)) {
         throw new Error("You are not the owner/creator of the post ")
     }
+    if(!isAdmin){
+        delete data.isFeatured
+    }
     const result = prisma.post.update({
         where: {
             id: postData.id
@@ -197,6 +200,7 @@ const updatePost = async (postId: string, data: Partial<Post>, authorId: string,
     })
     return result;
 }
+
 export const postService = {
     createPost,
     getAllPost,
