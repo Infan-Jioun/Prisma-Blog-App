@@ -13,7 +13,7 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 // post 
-// app.all('/api/auth/{*any}', toNodeHandler(auth));
+app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use("/posts", postRouter)
 app.use("/comments", commentRouter)
 app.get("/", (req, res) => {

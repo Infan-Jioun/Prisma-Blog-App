@@ -64,9 +64,9 @@ const getAllPost = async ({ search, tags, isFeatured, status, authorId, page, li
         orderBy: {
             [sortBy]: sortOrder
         },
-        include : {
-            _count : {
-                select : {comments : true}
+        include: {
+            _count: {
+                select: { comments: true }
             }
         }
     });
@@ -140,7 +140,9 @@ const getPostById = async (postId: string) => {
     })
 
 };
+const getMyPost = async (req ) => {
 
+}
 
 
 export const postService = {
