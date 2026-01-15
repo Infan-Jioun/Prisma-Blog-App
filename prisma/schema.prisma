@@ -15,7 +15,7 @@ datasource db {
 
 enum PostStatus {
   DRAFT
-  PUBLIHSED
+  PUBLISHED
   ARCIVHED
 }
 
@@ -30,7 +30,7 @@ model Post {
   content    String     @db.Text
   tumbnail   String?
   isFeatured Boolean    @default(false)
-  status     PostStatus @default(PUBLIHSED)
+  status     PostStatus @default(PUBLISHED)
   tags       String[]
   views      Int        @default(0)
   authorId   String
