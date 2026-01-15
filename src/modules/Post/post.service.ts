@@ -1,3 +1,4 @@
+import { text } from "node:stream/consumers";
 import { CommentStatus, PostStatus, type Post } from "../../../generated/prisma/client";
 import type { PostWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
@@ -224,14 +225,35 @@ const deletePost = async (postId: string, authorId: string, isAdmin: boolean) =>
 }
 const getStats = async () => {
     return await prisma.$transaction(async (tx) => {
-        const totalPosts = await tx.post.count();
-        const publishedPosts = await tx.post.count()
-        where: {
-            status: PostStatus.PUBLIHSED
-        }
-    })
+        const [totalPosts, publishedPosts, draftPosts, archivedPosts] =
+            await Promise.all([
+                tx.post.count(),
+                tx.post.count({
+                    where: {
+                        status: PostStatus.PUBLIHSED,
+                    },
+                }),
+                tx.post.count({
+                    where: {
+                        status: PostStatus.DRAFT,
+                    },
+                }),
+                tx.post.count({
+                    where: {
+                        status: PostStatus.ARCIVHED,
+                    },
+                }),
+            ]);
 
-}
+        return {
+            totalPosts,
+            publishedPosts,
+            draftPosts,
+            archivedPosts,
+        };
+    });
+};
+
 export const postService = {
     createPost,
     getAllPost,
