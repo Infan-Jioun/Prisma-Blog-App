@@ -26,7 +26,7 @@ const getAllPost = async (req: Request, res: Response) => {
     }
 }
 
-const createPost = async (req: Request, res: Response) => {
+const createPost = async (req: Request, res: Response , next : NextFunction) => {
     try {
         const user = await req.user;
         if (!user) {
@@ -39,9 +39,7 @@ const createPost = async (req: Request, res: Response) => {
         console.log(result);
 
     } catch (error) {
-        res.status(400).json({
-            error: "Post Creation Failed"
-        })
+        next(error)
     }
 }
 
@@ -113,12 +111,12 @@ const deletePost = async (req: Request, res: Response) => {
         });
     }
 };
-const getStats = async (req: Request, res: Response , next :NextFunction) => {
+const getStats = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const result = await postService.getStats();
         res.status(200).json(result);
     } catch (error) {
-           next(error)
+        next(error)
     }
 };
 
