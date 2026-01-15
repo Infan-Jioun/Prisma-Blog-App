@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "PostStatus" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCIVHED');
+CREATE TYPE "PostStatus" AS ENUM ('DRAFT', 'PUBLIHSED', 'ARCIVHED');
 
 -- CreateEnum
 CREATE TYPE "CommentStatus" AS ENUM ('APPROVED', 'REJECT');
@@ -11,7 +11,7 @@ CREATE TABLE "posts" (
     "content" TEXT NOT NULL,
     "tumbnail" TEXT,
     "isFeatured" BOOLEAN NOT NULL DEFAULT false,
-    "status" "PostStatus" NOT NULL DEFAULT 'PUBLISHED',
+    "status" "PostStatus" NOT NULL DEFAULT 'PUBLIHSED',
     "tags" TEXT[],
     "views" INTEGER NOT NULL DEFAULT 0,
     "authorId" TEXT NOT NULL,
