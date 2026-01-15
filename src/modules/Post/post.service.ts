@@ -225,7 +225,7 @@ const deletePost = async (postId: string, authorId: string, isAdmin: boolean) =>
 }
 const getStats = async () => {
     return await prisma.$transaction(async (tx) => {
-        const [totalPosts, PUBLIHSEDPosts, draftPosts, archivedPosts, approvedComment, totalUsers, adminCount, userCount] =
+        const [totalPosts, PUBLIHSEDPosts, draftPosts, archivedPosts, approvedComment, userCount, totalViews] =
             await Promise.all([
                 await tx.post.count(),
                 await tx.post.count({
@@ -250,15 +250,20 @@ const getStats = async () => {
                     }
                 }),
                 await tx.user.count({
-                     where : 
-                       {role : "ADMIN"}
-                     
-                }) ,
+                    where:
+                        { role: "ADMIN" }
+
+                }),
                 await tx.user.count({
-                     where : 
-                       {role : "USER"}
-                     
-                })  
+                    where:
+                        { role: "USER" }
+
+                }),
+                await tx.post.aggregate({
+                    _sum: {
+                        views: true
+                    }
+                })
             ]);
 
         return {
@@ -266,8 +271,9 @@ const getStats = async () => {
             PUBLIHSEDPosts,
             draftPosts,
             archivedPosts,
-            approvedComment, 
-            totalUsers
+            approvedComment,
+            userCount,
+            totalViews
 
         };
     });
