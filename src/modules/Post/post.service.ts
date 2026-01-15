@@ -222,7 +222,7 @@ const deletePost = async (postId: string, authorId: string, isAdmin: boolean) =>
 
 
 }
-const getStatic = async () => {
+const getStats = async () => {
          console.log("Static");
 }
 export const postService = {
@@ -232,5 +232,5 @@ export const postService = {
     getMyPost,
     updatePost,
     deletePost,
-    getStatic
+    getStats
 }

@@ -113,9 +113,9 @@ const deletePost = async (req: Request, res: Response) => {
         });
     }
 };
-const getStatic = async (req: Request, res: Response) => {
+const getStats = async (req: Request, res: Response) => {
     try {
-        const result = await postService.getStatic();
+        const result = await postService.getStats();
         res.status(200).json(result);
     } catch (error) {
         console.log(error);
@@ -132,5 +132,5 @@ export const postController = {
     getMyPost,
     updatePost,
     deletePost,
-    getStatic
+    getStats
 }
