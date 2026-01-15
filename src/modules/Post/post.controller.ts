@@ -104,12 +104,23 @@ const deletePost = async (req: Request, res: Response) => {
         const { postId } = req.params;
         const isAdmin = user.role === UserRole.ADMIN;
         console.log(isAdmin);
-        const result = await postService.deletePost(postId as string,  user.id, isAdmin);
+        const result = await postService.deletePost(postId as string, user.id, isAdmin);
         res.status(200).json(result);
     } catch (error) {
         console.log(error);
         res.status(400).json({
             error: "delete Failed",
+        });
+    }
+};
+const getStatic = async (req: Request, res: Response) => {
+    try {
+        const result = await postService.getStatic();
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            error: "static Failed",
         });
     }
 };
@@ -120,5 +131,6 @@ export const postController = {
     getPostById,
     getMyPost,
     updatePost,
-    deletePost
+    deletePost,
+    getStatic
 }
