@@ -1,4 +1,4 @@
-import type { Request, Response } from "express"
+import type { NextFunction, Request, Response } from "express"
 import { postService } from "./post.service"
 import type { PostStatus } from "../../../generated/prisma/enums";
 import { paginaitionSortingHelper } from "../../helpers/paginaitionSortingHelper";
@@ -113,15 +113,12 @@ const deletePost = async (req: Request, res: Response) => {
         });
     }
 };
-const getStats = async (req: Request, res: Response) => {
+const getStats = async (req: Request, res: Response , next :NextFunction) => {
     try {
         const result = await postService.getStats();
         res.status(200).json(result);
     } catch (error) {
-        console.log(error);
-        res.status(400).json({
-            error: "static Failed",
-        });
+           next(error)
     }
 };
 
