@@ -3,7 +3,7 @@ import { postService } from "./post.service"
 import type { PostStatus } from "../../../generated/prisma/enums";
 import { paginaitionSortingHelper } from "../../helpers/paginaitionSortingHelper";
 import { UserRole } from "../../middlewere/auth";
-const getAllPost = async (req: Request, res: Response) => {
+const getAllPost = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { search } = await req.query;
         const searchString = typeof search === "string" ? search : undefined;
@@ -20,13 +20,11 @@ const getAllPost = async (req: Request, res: Response) => {
 
         res.status(200).json(result);
     } catch (error) {
-        res.status(400).json({
-            error: "Get Post Failed"
-        })
+        next(error)
     }
 }
 
-const createPost = async (req: Request, res: Response , next : NextFunction) => {
+const createPost = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await req.user;
         if (!user) {
@@ -44,7 +42,7 @@ const createPost = async (req: Request, res: Response , next : NextFunction) => 
 }
 
 
-const getPostById = async (req: Request, res: Response) => {
+const getPostById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
         if (!id) {
@@ -54,12 +52,10 @@ const getPostById = async (req: Request, res: Response) => {
         const result = await postService.getPostById(id);
         res.status(200).json(result);
     } catch (error) {
-        res.status(400).json({
-            error: "Fetch Failed",
-        });
+        next(error)
     }
 };
-const getMyPost = async (req: Request, res: Response) => {
+const getMyPost = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user;
         if (!user) {
@@ -70,12 +66,10 @@ const getMyPost = async (req: Request, res: Response) => {
         const result = await postService.getMyPost(user.id);
         res.status(200).json(result);
     } catch (error) {
-        res.status(400).json({
-            error: "Fetch Failed",
-        });
+        next(error)
     }
 };
-const updatePost = async (req: Request, res: Response) => {
+const updatePost = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user;
         if (!user) {
@@ -87,13 +81,10 @@ const updatePost = async (req: Request, res: Response) => {
         const result = await postService.updatePost(postId as string, req.body, user.id, isAdmin);
         res.status(200).json(result);
     } catch (error) {
-        console.log(error);
-        res.status(400).json({
-            error: "Update Failed",
-        });
+        next(error)
     }
 };
-const deletePost = async (req: Request, res: Response) => {
+const deletePost = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user;
         if (!user) {
@@ -105,10 +96,7 @@ const deletePost = async (req: Request, res: Response) => {
         const result = await postService.deletePost(postId as string, user.id, isAdmin);
         res.status(200).json(result);
     } catch (error) {
-        console.log(error);
-        res.status(400).json({
-            error: "delete Failed",
-        });
+        next(error)
     }
 };
 const getStats = async (req: Request, res: Response, next: NextFunction) => {

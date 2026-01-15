@@ -1,8 +1,8 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
 import { commentService } from "./comment.service";
 
-const createComment = async (req: Request, res: Response) => {
+const createComment = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user;
         req.body.authorId = user?.id;
@@ -15,7 +15,7 @@ const createComment = async (req: Request, res: Response) => {
         })
     }
 }
-const getCommentById = async (req: Request, res: Response) => {
+const getCommentById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { commentId } = req.params
         const result = await commentService.getCommentById(commentId as string);
@@ -27,33 +27,27 @@ const getCommentById = async (req: Request, res: Response) => {
         })
     }
 }
-const getCommentByAutor = async (req: Request, res: Response) => {
+const getCommentByAutor = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { authorId } = req.params
         const result = await commentService.getCommentByAuthor(authorId as string);
         res.status(200).json(result); console.log(result);
     } catch (error) {
-        res.status(400).json({
-            error: "Comment Creation Failed",
-            details: error
-        })
+        next(error)
     }
 }
 
-const deleteComment = async (req: Request, res: Response) => {
+const deleteComment = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user;
         const { commentId } = req.params;
         const result = await commentService.deleteComment(commentId as string, user?.id as string);
         res.status(200).json(result); console.log(result);
     } catch (error) {
-        res.status(400).json({
-            error: "Comment Deleted Failed",
-            details: error
-        })
+        next(error)
     }
 }
-const updateComment = async (req: Request, res: Response) => {
+const updateComment = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user;
         const { commentId } = req.params;
@@ -61,24 +55,17 @@ const updateComment = async (req: Request, res: Response) => {
             user?.id as string);
         res.status(200).json(result); console.log(result);
     } catch (error) {
-        res.status(400).json({
-            error: "Comment updated Failed",
-            details: error
-        })
+        next(error)
     }
 }
-const moderateComment = async (req: Request, res: Response) => {
+const moderateComment = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { commentId } = req.body;
 
         const result = await commentService.moderateComment(commentId as string, req.body);
         res.status(200).json(result); console.log(result);
     } catch (error) {
-        const errorMessage = (error instanceof Error) ? error.message : "Comment updated Failed"
-        res.status(400).json({
-            error: errorMessage,
-            details: error
-        })
+        next(error)
     }
 }
 
