@@ -5,6 +5,7 @@ import { auth } from "./lib/auth";
 import cors from 'cors';
 import { commentRouter } from "./modules/Comments/comment.router";
 import { errorHandler } from "./middlewere/globalErrorHandler";
+import { notFound } from "./middlewere/notFound";
 export const app: Application = express();
 
 app.use(cors({
@@ -17,7 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use("/posts", postRouter)
 app.use("/comments", commentRouter)
-app.use(errorHandler)
+
 app.get("/", (req, res) => {
     res.send("Hello World")
 })
+app.use(notFound)
+app.use(errorHandler)
