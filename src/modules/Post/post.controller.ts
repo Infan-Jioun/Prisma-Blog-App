@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express"
 import { postService } from "./post.service"
-import type { PostStatus } from "../../../generated/prisma/enums";
 import { paginaitionSortingHelper } from "../../helpers/paginaitionSortingHelper";
 import { UserRole } from "../../middlewere/auth";
+import type { PostStatus } from "../../../prisma/generated/prisma/enums";
 const getAllPost = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { search } = await req.query;

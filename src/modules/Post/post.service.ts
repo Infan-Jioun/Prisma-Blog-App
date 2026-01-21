@@ -1,7 +1,8 @@
 import { text } from "node:stream/consumers";
-import { CommentStatus, PostStatus, type Post } from "../../../generated/prisma/client";
-import type { PostWhereInput } from "../../../generated/prisma/models";
+import { CommentStatus, PostStatus, type Post } from "../../../prisma/generated/prisma/client";
+
 import { prisma } from "../../lib/prisma";
+import type { PostWhereInput } from "../../../prisma/generated/prisma/models";
 
 const getAllPost = async ({ search, tags, isFeatured, status, authorId, page, limit, skip, sortBy, sortOrder }: { search: string | undefined, tags: string[] | [], isFeatured: boolean | undefined, status: PostStatus | undefined, authorId: string | undefined, page: number, limit: number, skip: number, sortBy: string, sortOrder: string }) => {
     const addConditions: PostWhereInput[] = [];
@@ -92,7 +93,7 @@ const createPost = async (data: Omit<Post, "id " | "createdId" | "updatedId" | "
 
 const getPostById = async (postId: string) => {
 
-    return await prisma.$transaction(async (tx) => {
+    return await prisma.$transaction(async (tx: any) => {
         await tx.post.update({
             where: {
                 id: postId
@@ -224,7 +225,7 @@ const deletePost = async (postId: string, authorId: string, isAdmin: boolean) =>
 
 }
 const getStats = async () => {
-    return await prisma.$transaction(async (tx) => {
+    return await prisma.$transaction(async (tx: any) => {
         const [totalPosts, PUBLIHSEDPosts, draftPosts, archivedPosts, approvedComment, adminCount, userCount, totalViewsData] =
             await Promise.all([
                 await tx.post.count(),
@@ -274,7 +275,7 @@ const getStats = async () => {
             approvedComment,
             adminCount,
             userCount,
-            totalViews : totalViewsData._sum.views
+            totalViews: totalViewsData._sum.views
 
         };
     });
